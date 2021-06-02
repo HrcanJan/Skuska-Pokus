@@ -12,9 +12,9 @@ class TestCanvas extends Canvas implements MouseListener, MouseMotionListener {
     public ArrayList<Usecka> our_objects2 = new ArrayList<>();
     Plus aktualny_Plus;
     Usecka aktualna_Usecka;
-    int xpos = 0, ypos = 0, button = 1;
+    int xpos = 0, ypos = 0, button = 1, mode = 4;
     String color = "GREEN";
-    Color c;
+    Color c = Color.GREEN;
 
     public TestCanvas () {
         super();
@@ -28,6 +28,15 @@ class TestCanvas extends Canvas implements MouseListener, MouseMotionListener {
 
     public void setColor(String color){
         this.color = color;
+        checkColor(color);
+    }
+
+    public Color getColor(){
+        return c;
+    }
+
+    public void setMode(int mode){
+        this.mode = mode;
     }
 
     public void mouseClicked(MouseEvent e) {
@@ -93,8 +102,6 @@ class TestCanvas extends Canvas implements MouseListener, MouseMotionListener {
     }
 
     public void mouseUsecka(int x, int y){
-        aktualna_Usecka.x = xpos;
-        aktualna_Usecka.y = ypos;
         aktualna_Usecka.endx = x;
         aktualna_Usecka.endy = y;
     }

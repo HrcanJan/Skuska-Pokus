@@ -6,11 +6,14 @@ import java.awt.event.*;
 
 public class Window extends JFrame implements ItemListener, ActionListener{
 
-    Panel first;
+    Panel first, second;
     Choice color;
-    private TestCanvas can;
+    Label label;
+    private final TestCanvas can;
     private final JButton button1 = new JButton("Plus");
     private final JButton button2 = new JButton("Usecka");
+    private final JButton button4 = new JButton("Draw");
+    private final JButton button5 = new JButton("Select");
     String[] types = {"GREEN", "BLUE", "YELLOW", "RED", "BLACK", "GRAY", "PINK",  "ORANGE"};
     String colorSelected;
 
@@ -27,6 +30,9 @@ public class Window extends JFrame implements ItemListener, ActionListener{
         color = new Choice();
         color.addItemListener(this);
 
+        label = new Label();
+        label.setBackground(Color.GREEN);
+
         for (String type : types)
             color.add(type);
 
@@ -37,20 +43,33 @@ public class Window extends JFrame implements ItemListener, ActionListener{
         first.add(button1);
         first.add(button2);
         first.add(color);
+        first.add(label);
+
+        second = new Panel();
+        second.add(button4);
+        second.add(button5);
 
         button1.addActionListener(this);
         button1.setFocusable(false);
         button2.addActionListener(this);
         button2.setFocusable(false);
+        button4.addActionListener(this);
+        button4.setFocusable(false);
+        button5.addActionListener(this);
+        button5.setFocusable(false);
 
         this.add("North", first);
-        var panelLayout = new GridLayout(1, 3);
+        var panelLayout = new GridLayout(1, 4);
         first.setLayout(panelLayout);
+        this.add("South", second);
+        panelLayout = new GridLayout(1, 2);
+        second.setLayout(panelLayout);
     }
 
     @Override
     public void itemStateChanged(ItemEvent e) {
         can.setColor(color.getSelectedItem());
+        label.setBackground(can.getColor());
     }
 
     @Override
@@ -59,5 +78,9 @@ public class Window extends JFrame implements ItemListener, ActionListener{
             can.setButton(1);
         else if (e.getSource() == button2)
             can.setButton(2);
+        else if (e.getSource() == button4)
+            can.setMode(4);
+        else if (e.getSource() == button5)
+            can.setMode(5);
     }
 }
