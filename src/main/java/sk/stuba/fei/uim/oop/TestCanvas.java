@@ -45,20 +45,40 @@ class TestCanvas extends Canvas implements MouseListener, MouseMotionListener {
     public void mousePressed(MouseEvent e) {
         xpos = e.getX();
         ypos = e.getY();
-        checkColor(color);
-        if(button == 1)
-            aktualny_Plus = new Plus(xpos, ypos,1,1, c);
-        if(button == 2)
-            aktualna_Usecka = new Usecka(xpos, ypos, xpos, ypos, c);
+        if(mode == 4) {
+            if (button == 1)
+                aktualny_Plus = new Plus(xpos, ypos, 1, 1, c);
+            if (button == 2)
+                aktualna_Usecka = new Usecka(xpos, ypos, xpos, ypos, c);
+        }
+        else{
+            for(Plus p : our_objects1)
+                if(checkPlus(p)){
+                    System.out.println("SET");
+                    p.setFarba(c);
+                    repaint();
+                    break;
+                }
+        }
     }
-    public void mouseReleased(MouseEvent e) {
-        if(button == 1)
-            our_objects1.add(aktualny_Plus);
-        if(button == 2)
-            our_objects2.add(aktualna_Usecka);
-        repaint();
-        aktualny_Plus = null;
 
+    public boolean checkPlus(Plus p){
+        if(xpos > p.returnX() && ypos > p.returnY() + p.returnHeight() / 3 &&
+        xpos < p.returnX() + p.returnWidth() && ypos < p.returnY() + (2 * (p.returnHeight() / 3)))
+            return true;
+        return (xpos > p.returnX() + p.returnWidth() / 3 && ypos > p.returnY() &&
+                xpos < p.returnX() + (2 * (p.returnWidth() / 3)) && ypos < p.returnY() + p.returnHeight());
+    }
+
+    public void mouseReleased(MouseEvent e) {
+        if(mode == 4) {
+            if (button == 1)
+                our_objects1.add(aktualny_Plus);
+            if (button == 2)
+                our_objects2.add(aktualna_Usecka);
+            repaint();
+            aktualny_Plus = null;
+        }
     }
     public void mouseEntered(MouseEvent e) {
 
@@ -67,14 +87,16 @@ class TestCanvas extends Canvas implements MouseListener, MouseMotionListener {
 
     }
     public void mouseDragged(MouseEvent e) {
-        int dx = e.getX();
-        int dy = e.getY();
-        if (aktualny_Plus != null || aktualna_Usecka != null) {
-            if(button == 1)
-                mousePlus(dx, dy);
-            if(button == 2)
-                mouseUsecka(dx, dy);
-            repaint();
+        if(mode == 4) {
+            int dx = e.getX();
+            int dy = e.getY();
+            if (aktualny_Plus != null || aktualna_Usecka != null) {
+                if (button == 1)
+                    mousePlus(dx, dy);
+                if (button == 2)
+                    mouseUsecka(dx, dy);
+                repaint();
+            }
         }
     }
 
