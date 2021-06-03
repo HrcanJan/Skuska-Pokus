@@ -52,10 +52,9 @@ class TestCanvas extends Canvas implements MouseListener, MouseMotionListener {
                 aktualna_Usecka = new Usecka(xpos, ypos, xpos, ypos, c);
         }
         else{
-            for(Plus p : our_objects1)
-                if(checkPlus(p)){
-                    System.out.println("SET");
-                    p.setFarba(c);
+            for(int i = our_objects1.size() - 1; i >= 0; i--)
+                if(checkPlus(our_objects1.get(i))){
+                    our_objects1.get(i).setFarba(c);
                     repaint();
                     break;
                 }
